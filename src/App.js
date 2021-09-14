@@ -10,9 +10,9 @@ function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => authenticated === true
-        ? <Component {...props} />
-        : <Redirect to={{ pathname: 'login', state: { from: props.location }}} /> }
+      render={routeProps => authenticated === true
+        ? <Component {...routeProps} />
+        : <Redirect to={{ pathname: 'login', state: { from: routeProps.location }}} /> }
     />
   )
 }
@@ -21,8 +21,8 @@ function PublicRoute({ component: Component, authenticated, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => authenticated === false
-        ? <Component {...props} />
+      render={routeProps => authenticated === false
+        ? <Component {...routeProps} />
         : <Redirect to='/chat' /> }
     />
   )
@@ -34,10 +34,10 @@ class App extends Component {
     return this.state.loading === true ? <h2>Loading...</h2> : (
       <Router>
         <Switch>
-          <Route exact path={'/'} component={Home}/>
-          <PrivateRoute path={'/chat'} authenticated={this.state.authenticated} component={Chat}/>
-          <PublicRoute path={'/signup'} authenticated={this.state.authenticated} component={Signup}/>
-          <PublicRoute path={'/login'} authenticated={this.state.authenticated} component={Login}/>
+          <Route exact path={'/'} component={Home} />
+          <PrivateRoute path={'/chat'} authenticated={this.state.authenticated} component={Chat} />
+          <PublicRoute path={'/signup'} authenticated={this.state.authenticated} component={Signup} />
+          <PublicRoute path={'/login'} authenticated={this.state.authenticated} component={Login} />
         </Switch>
       </Router>
     );
@@ -45,3 +45,4 @@ class App extends Component {
 }
 
 export default App;
+
